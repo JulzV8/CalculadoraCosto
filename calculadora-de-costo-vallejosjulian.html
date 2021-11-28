@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Costo - Vallejos Julian</title>
+</head>
+<body>
+  <h1>Calculadora de costo</h1>
+  <h2>Cuanto me cuesta hacer una torta?</h2>
+  <p>1)Ingrese cada dato dentro de su cuadro correspondiente.<br>
+  2)Luego presione el boton "AÑADIR INGREDIENTE". <br>
+  3)Cuando haya añadido todos los ingredientes, presione "CALCULAR". <br>
+  AVISO 1: Recuerda respetar las unidades entre contenido del producto y cantidad a usar. <br>
+  AVISO 2: En contenido y cantidad, solo ingresar numeros.<br>
+  EJEMPLO: Si el contenido del producto es 1 kilo y utilizarás la mitad, ingresar 0.5. <br>
+  O si no, ingresar en contenido 1000 y en cantidad a usar 500.</p>
+  <table  id="tabla" style="width:70%">
+      <tr>
+        <th>Nombre del ingrediente</th>
+        <th>Contenido del producto</th>
+        <th>Precio</th>
+        <th>Cantidad a usar</th>
+      </tr>
+      <tbody id="tableBody">
+        <tr id="tableInput">
+          <td><input id="nombre" type="Nombre"></td>
+          <td><input id="contenido" type="Contenido"></td>
+          <td><input id="precio" type="Precio"></td>
+          <td><input id="cantidad" type="Cantidad"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="contenedor"></div>
+  <button onclick=aniadirIngrediente()>AÑADIR INGREDIENTE</button>
+  <button onclick=calcular()>CALCULAR</button>
+  <button onclick=borrarLista()>BORRAR LISTA</button>
+
+
+  <script src="calculadora-de-costo-vallejosjulian.js"></script>
+  
+</body>
+</html>

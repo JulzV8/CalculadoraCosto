@@ -1,0 +1,9 @@
+table, th, td {
+  border:1px solid #000000;
+}
+td{
+  text-align: center;
+}
+button{
+  margin: 10px;
+}
