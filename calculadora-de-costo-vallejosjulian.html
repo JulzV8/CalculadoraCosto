@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculadora de Costo - Vallejos Julian</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <body>
   <h1>Calculadora de costo</h1>
@@ -26,17 +27,18 @@
       </tr>
       <tbody id="tableBody">
         <tr id="tableInput">
-          <td><input id="nombre" type="Nombre"></td>
-          <td><input id="contenido" type="Contenido"></td>
-          <td><input id="precio" type="Precio"></td>
-          <td><input id="cantidad" type="Cantidad"></td>
+          <td><input class="inputs" id="nombre" type="Nombre"></td>
+          <td><input class="inputs" id="contenido" type="Contenido"></td>
+          <td><input class="inputs" id="precio" type="Precio"></td>
+          <td><input class="inputs" id="cantidad" type="Cantidad"></td>
         </tr>
       </tbody>
     </table>
     <div id="contenedor"></div>
-  <button onclick=aniadirIngrediente()>AÑADIR INGREDIENTE</button>
-  <button onclick=calcular()>CALCULAR</button>
-  <button onclick=borrarLista()>BORRAR LISTA</button>
+  <button class="botones" id="botonAniadirIngrediente">AÑADIR INGREDIENTE</button>
+  <button class="botones" id="botonBorrarLista">BORRAR LISTA</button>
+  <button onclick=test()  id="test">test</button>
+  <button  id="test2">test2</button>
 
 
   <script src="calculadora-de-costo-vallejosjulian.js"></script>
