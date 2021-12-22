@@ -26,49 +26,51 @@ if (localStorage.length > 0) {
 //Llamo a calcular para que se muestre la informacion en pantalla
 calcular();
 
-//Asigno listeners a los botones
-let botones=document.getElementsByClassName("botones")
-for (const element of botones) {
-    element.addEventListener("mousedown",(e)=>{ 
-      if (e.button == 0) {
-        switch (e.target.id) {
-          case "botonAniadirIngrediente":
-            aniadirIngrediente()
-            break;
-          default:
-            borrarLista()
-            break;
+$(() => {
+  //Asigno listeners a los botones
+  let botones=$(".botones")
+  for (const element of botones) {
+      element.addEventListener("mousedown",(e)=>{ 
+        switch (element.id) {
+            case "botonAniadirIngrediente":
+              aniadirIngrediente()
+              break;
+            default:
+              borrarLista()
+              break;
+          }
         }
+      )
+    }
+    //Asigno listeners a los inputs
+    let inputs=$(".inputs")
+    inputs.keyup((e)=>{ 
+      if (e.key == "Enter") {
+        aniadirIngrediente()
+        let inputNombre = $("#nombre");
+        inputNombre.focus();
       }
-    }
-    )
-  }
+    })
+    //Creo la tabla con los valores de arrayIngredientes
+    arrayIngredientes.forEach(element => {
+    let tableBody=$("#tableBody");
+    tableBody.prepend(`<tr>
+      <td>${element.nombre}</td>
+      <td>${element.contenido}</td>
+      <td>${element.precio}</td>
+      <td>${element.cantidad}</td>
+      </tr>`);
+    });
 
-//Asigno listeners a los inputs
-let inputs=document.getElementsByClassName("inputs")
-for (const element of inputs) {
-  element.addEventListener("keyup",(e)=>{ 
-    if (e.key == "Enter") {
-      aniadirIngrediente()
-      let inputNombre = document.getElementById("nombre");
-      inputNombre.focus();
-    }
-  })
-}
-
-//Creo la tabla con los valores de arrayIngredientes
-arrayIngredientes.forEach(element => {
-let tableBody=document.getElementById("tableBody");
-let tr = document.createElement("tr");
-tr.className = "tableRow";
-let tableInput = document.getElementById("tableInput");
-for (const property in element) {
-  let td=document.createElement("td");
-  td.innerHTML = element[property];
-  tr.appendChild(td);
-}
-tableBody.insertBefore(tr,tableInput);
 });
+
+
+function test(){
+  $("#tabla").css("background-color","black");
+  
+  
+}
+
 
 //Funcion para validar que un string contenga valor numerico
 function validarNumero(texto){
@@ -83,10 +85,10 @@ function validarNumero(texto){
 //y luego lo añade tanto al arrayIngredientes como al localStorage
 function aniadirIngrediente(){
   let ingrediente = new Ingrediente(
-    document.getElementById("nombre").value,
-    document.getElementById("contenido").value,
-    document.getElementById("precio").value,
-    document.getElementById("cantidad").value);
+    $("#nombre")[0].value,
+    $("#contenido")[0].value,
+    $("#precio")[0].value,
+    $("#cantidad")[0].value);
     let datosValidos = true;
     //Valido campos numericos
     for (const element in ingrediente) {
@@ -106,36 +108,28 @@ function aniadirIngrediente(){
     //Si los valores son correctos, se continua. Caso contrario termina la funcion y da error
     if (datosValidos) {
       //Creo una nueva fila para la tabla y la añado
-      let tableBody=document.getElementById("tableBody");
-      let tr = document.createElement("tr");
-      tr.className = "tableRow";
-      let tableInput = document.getElementById("tableInput");
-      
-      for (const element in ingrediente) {
-        let td=document.createElement("td");
-        td.innerHTML = ingrediente[element];
-        tr.appendChild(td);
-      }
-      tableBody.insertBefore(tr,tableInput);
+      let tableBody=$("#tableBody");
+      tableBody.prepend(`<tr>
+        <td>${ingrediente.nombre}</td>
+        <td>${ingrediente.contenido}</td>
+        <td>${ingrediente.precio}</td>
+        <td>${ingrediente.cantidad}</td>
+        </tr>`);
       localStorage.setItem(arrayIngredientes.length,JSON.stringify(ingrediente))
       arrayIngredientes.push(ingrediente);
-      document.getElementById("nombre").value = "";
-      document.getElementById("contenido").value = "";
-      document.getElementById("precio").value = "";
-      document.getElementById("cantidad").value = "";
+      $("#nombre")[0].value = "";
+      $("#contenido")[0].value = "";
+      $("#precio")[0].value = "";
+      $("#cantidad")[0].value = "";
       calcular();
     return 1
   }
   else{
     //Creo un parrafo que muestre error
-    let pError = document.getElementById("p2");
-    if (pError==null) {
-      pError = document.createElement("p");
-      pError.id = "p2"
-      let contenedor=document.getElementById("contenedor");
-      contenedor.appendChild(pError);
+    let pError =$("#mensajeError");
+    if (pError.length==0) {
+      $("#contenedor").append(`<p id="mensajeError">ERROR! Verifica que los datos que ingresas sean numeros</p>`);
     }
-    pError.innerHTML = "ERROR! Verifica que los datos que ingresas sean numeros";
     return -1
   }
 }
@@ -174,21 +168,20 @@ function calcular (){
   if (total != 0) {
     total = Math.round(total * 100) / 100;
     //Cambio el color de fondo de la tabla
-    let tabla = document.getElementById("tabla");
-    tabla.style.backgroundColor = "#" + colorRandom() + "80";
+    $("#tabla").css("background-color","#" + colorRandom() + "80");
     //Creo el parrafo que dice el resultado y lo muestro
-    let p = document.getElementById("p");
-    if (p==null) {
-      p = document.createElement("p");
-      p.id = "p"
-      let contenedor=document.getElementById("contenedor");
-      contenedor.appendChild(p);
+    let p = $("#mensajeResultado");
+    if (p.length==0) {
+      $("#contenedor").append(`<p id="mensajeResultado">En total, nos costará: ` + total + ` pesos hacer esta receta.</p>`);
     }
-    p.innerHTML = "En total, nos costará: " + total + " pesos hacer esta receta.";
+    else{
+      p.remove();
+      $("#contenedor").append(`<p id="mensajeResultado">En total, nos costará: ` + total + ` pesos hacer esta receta.</p>`);
+    }
     //Si hay mensaje de error, lo elimina
-    let pError = document.getElementById("p2");
-    if (pError!=null) {
-      pError.parentNode.removeChild(pError);
+    let pError = $("#mensajeError");
+    if (pError.length!=0) {
+      pError.remove();
     }
   }
 }
@@ -196,27 +189,18 @@ function calcular (){
 //Elimina todos los datos del array y del LocalStorage
 function borrarLista(){
   //Vacio la tabla
-  let rows = document.getElementsByClassName("tableRow")
-  do {
-    let len = rows.length
-    if (len == 0) {
-      break;
-    }else{
-      rows[0].parentNode.removeChild(rows[0]);
-    }
-  } while (true);
+  $("#tableBody").empty();
   //Elimino parrafos
-  let p = document.getElementById("p");
-  if (p!=null) {
-    p.parentNode.removeChild(p);
+  let mensajeError = $("#mensajeError")
+  if (mensajeError.length != 0) {
+    mensajeError.remove();
   }
-  let pError = document.getElementById("p2");
-  if (pError!=null) {
-    pError.parentNode.removeChild(pError);
+  let mensajeResultado = $("#mensajeResultado");
+  if (mensajeResultado.length != 0) {
+    mensajeResultado.remove();
   }
-  //Cambio el color de la tabla a blano
-  let tabla = document.getElementById("tabla");
-  tabla.style.backgroundColor = "#ffffff";
+  //Cambio el color de la tabla a blanco
+  $("#tabla").css("background-color","white");
   //Borro datos del array y del LocalStorage
   arrayIngredientes = [];
   let len = localStorage.length;
