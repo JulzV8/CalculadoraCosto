@@ -7,38 +7,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculadora de Costo - Vallejos Julian</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </head>
-<body>
-  <h1>Calculadora de costo</h1>
-  <h2>Cuanto me cuesta hacer una torta?</h2>
-  <p>1)Ingrese cada dato dentro de su cuadro correspondiente.<br>
-  2)Luego presione el boton "AÑADIR INGREDIENTE". <br>
-  3)Cuando haya añadido todos los ingredientes, presione "CALCULAR". <br>
-  AVISO 1: Recuerda respetar las unidades entre contenido del producto y cantidad a usar. <br>
-  AVISO 2: En contenido y cantidad, solo ingresar numeros.<br>
-  EJEMPLO: Si el contenido del producto es 1 kilo y utilizarás la mitad, ingresar 0.5. <br>
-  O si no, ingresar en contenido 1000 y en cantidad a usar 500.</p>
-  <table  id="tabla" style="width:70%">
-      <tr>
-        <th>Nombre del ingrediente</th>
-        <th>Contenido del producto</th>
-        <th>Precio</th>
-        <th>Cantidad a usar</th>
-      </tr>
+<body  class="bg-light">
+  <div class="bg-primary bg-gradient mb-0">
+    <h1 class="display-1 text-white ps-4 mb-0">Calculadora de costo</h1>
+  </div>
+  <div id="divTexto" class="px-3 m-auto my-3 border border-dark rounded-3 w-50 text-center" style="display: none;">
+    <h2>Cuanto me cuesta hacer una torta?</h2>
+    <p>1)Ingrese cada dato dentro de su cuadro correspondiente.<br>
+      2)Luego presione el boton "AÑADIR INGREDIENTE". <br>
+      3)Cuando haya añadido todos los ingredientes, presione "CALCULAR". <br>
+      AVISO 1: Recuerda respetar las unidades entre contenido del producto y cantidad a usar. <br>
+      AVISO 2: En contenido y cantidad, solo ingresar numeros.<br>
+      EJEMPLO: Si el contenido del producto es 1 kilo y utilizarás la mitad, ingresar 0.5. <br>
+      O si no, ingresar en contenido 1000 y en cantidad a usar 500.</p>
+  </div>
+  <div id="divTabla" style="display: none;">
+    <table class="table m-auto" id="tabla" style="width:70%">
+      <thead class="table">
+        <th class="text-center">Nombre del ingrediente</th>
+        <th class="text-center">Contenido del producto</th>
+        <th class="text-center">Precio</th>
+        <th class="text-center">Cantidad a usar</th>
+      </thead>
       <tbody id="tableBody">
       </tbody>
-      <tr id="tableInput">
+      <tr class="table" id="tableInput">
         <td><input class="inputs" id="nombre" type="Nombre"></td>
         <td><input class="inputs" id="contenido" type="Contenido"></td>
         <td><input class="inputs" id="precio" type="Precio"></td>
         <td><input class="inputs" id="cantidad" type="Cantidad"></td>
       </tr>
     </table>
-    <div id="contenedor"></div>
-  <button class="botones" id="botonAniadirIngrediente">AÑADIR INGREDIENTE</button>
-  <button class="botones" id="botonBorrarLista">BORRAR LISTA</button>
-  <button onclick=test()  id="test">test</button>
-  <button  id="test2">test2</button>
+    <div class="text-center" id="contenedor"></div>
+    <div class="d-flex justify-content-center">
+      <button class="botones btn btn-primary mx-2" id="botonAniadirIngrediente">AÑADIR INGREDIENTE</button>
+      <button class="botones btn btn-primary mx-2" id="botonBorrarLista">BORRAR LISTA</button>
+    </div>
+  </div>
 
 
   <script src="calculadora-de-costo-vallejosjulian.js"></script>

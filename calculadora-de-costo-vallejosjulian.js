@@ -28,6 +28,8 @@ calcular();
 
 $(() => {
   //Asigno listeners a los botones
+  $("#divTexto").fadeIn(()=>{
+  $("#divTabla").fadeIn();})
   let botones=$(".botones")
   for (const element of botones) {
       element.addEventListener("mousedown",(e)=>{ 
@@ -54,23 +56,15 @@ $(() => {
     //Creo la tabla con los valores de arrayIngredientes
     arrayIngredientes.forEach(element => {
     let tableBody=$("#tableBody");
-    tableBody.prepend(`<tr>
-      <td>${element.nombre}</td>
-      <td>${element.contenido}</td>
-      <td>${element.precio}</td>
-      <td>${element.cantidad}</td>
+    tableBody.append(`<tr>
+      <td class="table">${element.nombre}</td>
+      <td class="table">${element.contenido}</td>
+      <td class="table">${element.precio}</td>
+      <td class="table">${element.cantidad}</td>
       </tr>`);
     });
 
 });
-
-
-function test(){
-  $("#tabla").css("background-color","black");
-  
-  
-}
-
 
 //Funcion para validar que un string contenga valor numerico
 function validarNumero(texto){
@@ -89,39 +83,40 @@ function aniadirIngrediente(){
     $("#contenido")[0].value,
     $("#precio")[0].value,
     $("#cantidad")[0].value);
-    let datosValidos = true;
-    //Valido campos numericos
-    for (const element in ingrediente) {
-      if (element == "nombre") {
-        continue;      
-      }
-      else{
-        let numero = validarNumero(ingrediente[element]);
-        if ( numero != -1) {
-          ingrediente[element] = numero;
-        }else{
-          datosValidos= false;
-          break;
-        }
+  let datosValidos = true;
+  //Valido campos numericos
+  for (const element in ingrediente) {
+    if (element == "nombre") {
+      continue;      
+    }
+    else{
+      let numero = validarNumero(ingrediente[element]);
+      if ( numero != -1) {
+        ingrediente[element] = numero;
+      }else{
+        datosValidos= false;
+        break;
       }
     }
-    //Si los valores son correctos, se continua. Caso contrario termina la funcion y da error
-    if (datosValidos) {
-      //Creo una nueva fila para la tabla y la añado
-      let tableBody=$("#tableBody");
-      tableBody.prepend(`<tr>
-        <td>${ingrediente.nombre}</td>
-        <td>${ingrediente.contenido}</td>
-        <td>${ingrediente.precio}</td>
-        <td>${ingrediente.cantidad}</td>
-        </tr>`);
-      localStorage.setItem(arrayIngredientes.length,JSON.stringify(ingrediente))
-      arrayIngredientes.push(ingrediente);
-      $("#nombre")[0].value = "";
-      $("#contenido")[0].value = "";
-      $("#precio")[0].value = "";
-      $("#cantidad")[0].value = "";
-      calcular();
+  }
+  //Si los valores son correctos, se continua. Caso contrario termina la funcion y da error
+  if (datosValidos) {
+    //Creo una nueva fila para la tabla y la añado
+    let tableBody=$("#tableBody");
+    tableBody.append(`<tr class="tr" style="display: none;">
+      <td class="table">${ingrediente.nombre}</td>
+      <td class="table">${ingrediente.contenido}</td>
+      <td class="table">${ingrediente.precio}</td>
+      <td class="table">${ingrediente.cantidad}</td>
+      </tr>`);
+    localStorage.setItem(arrayIngredientes.length,JSON.stringify(ingrediente))
+    arrayIngredientes.push(ingrediente);
+    $("#nombre")[0].value = "";
+    $("#contenido")[0].value = "";
+    $("#precio")[0].value = "";
+    $("#cantidad")[0].value = "";
+    $(".tr").fadeIn();
+    calcular();
     return 1
   }
   else{
@@ -135,27 +130,27 @@ function aniadirIngrediente(){
 }
 
 //Funcion que genera un color aleatorio
-function colorRandom() {
-  let color = [];
-  //Itero 16 veces para conseguir un valor de 0 a F hexadecimal y agrego el resultado al array
-    for (let index = 0; index < 6; index++) {
-      let letra = Math.floor(Math.random() * 16);
-      if (letra >9) {
-        switch (letra) {
-          case 10: letra = "a"; break;
-          case 11: letra = "b"; break;
-          case 12: letra = "c"; break;
-          case 13: letra = "d"; break;
-          case 14: letra = "e"; break;
-          default: letra = "f"; break;
-        }
-      }
-      color.push(letra);
-    }
-    //Uno el array en un string y lo devuelvo
-    color = color.join("");
-    return color;
-}
+// function colorRandom() {
+//   let color = [];
+//   //Itero 16 veces para conseguir un valor de 0 a F hexadecimal y agrego el resultado al array
+//     for (let index = 0; index < 6; index++) {
+//       let letra = Math.floor(Math.random() * 16);
+//       if (letra >9) {
+//         switch (letra) {
+//           case 10: letra = "a"; break;
+//           case 11: letra = "b"; break;
+//           case 12: letra = "c"; break;
+//           case 13: letra = "d"; break;
+//           case 14: letra = "e"; break;
+//           default: letra = "f"; break;
+//         }
+//       }
+//       color.push(letra);
+//     }
+//     //Uno el array en un string y lo devuelvo
+//     color = color.join("");
+//     return color;
+// }
 
 //Funcion calcular
 function calcular (){
@@ -167,8 +162,8 @@ function calcular (){
   //Si el total es 0 termina la funcion
   if (total != 0) {
     total = Math.round(total * 100) / 100;
-    //Cambio el color de fondo de la tabla
-    $("#tabla").css("background-color","#" + colorRandom() + "80");
+    // //Cambio el color de fondo de la tabla
+    // $("#tabla").css("background-color","#" + colorRandom() + "80");
     //Creo el parrafo que dice el resultado y lo muestro
     let p = $("#mensajeResultado");
     if (p.length==0) {
