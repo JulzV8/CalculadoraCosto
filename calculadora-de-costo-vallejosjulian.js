@@ -26,7 +26,42 @@ if (localStorage.length > 0) {
 //Llamo a calcular para que se muestre la informacion en pantalla
 calcular();
 
+
+
+
+
+
+
+
 $(() => {
+
+
+
+  $("#botonWikipedia").click(()=>{
+
+    let wikipediaAajaxTitle = $.ajax({
+      url:"http://es.wikipedia.org/w/api.php",
+      type:"GET",
+      data:{
+        action:"query",
+        rnnamespace:"0",
+        format:"json",
+        list:"random",
+        origin:"*"
+      },
+      success:function (data) {
+        let title=data.query.random[0].title;
+        let espacios=/ /gi;
+        title = title.replace(espacios,"_")
+        console.log(title);
+        let p = $("#linkWikipedia");
+        if (p.length!=0) {
+          p.remove();
+        }
+        $("#contenedor").prepend(`<div class="m-2"><a id="linkWikipedia" href="https://es.wikipedia.org/wiki/${title}">https://es.wikipedia.org/wiki/${title}</a></div>`);
+      }
+    })
+  })
   //Asigno listeners a los botones
   $("#divTexto").fadeIn(()=>{
   $("#divTabla").fadeIn();})
@@ -203,3 +238,4 @@ function borrarLista(){
     localStorage.removeItem(index)
   }
 }
+
